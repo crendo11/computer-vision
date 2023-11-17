@@ -12,7 +12,7 @@ sys.path.insert(0, './')
 import feature_detection as fd
 
 # load the image
-image = cv2.imread('./2023_11_10_Class_exercises/images/1.jpg')
+image = cv2.imread('./2023_11_10_Class_practical/images/1.jpg')
 # convert to gray scale image
 Iog = image.copy()
 I = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
