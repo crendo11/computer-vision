@@ -45,7 +45,7 @@ v = size
 # constants
 k = 0.05
 sigma = 0.5
-threshold = 0.05
+threshold = 0.005
 
 # create w matrix
 w = np.zeros((u,v))
@@ -54,11 +54,7 @@ for i in range(u):
         w[i][j] = np.exp(-(i+j)**2/(2*sigma))
 
 # Gx = np.array([[-1,0,1],[-1,0,1],[-1,0,1]])
-
-Gx = np.array([
-    [1, 0, -1],
-    [2, 0, -2],
-    [1, 0, -1]])
+Gx = np.array([[1, 0, -1], [2, 0, -2], [1, 0, -1]])
 
 Gy = Gx.T
 
