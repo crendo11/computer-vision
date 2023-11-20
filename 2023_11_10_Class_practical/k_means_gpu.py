@@ -1,6 +1,7 @@
 """
  k menans algorith to classify image features into 64 classes
  each feature is a vector of 4 elements
+ Optimized to work with GPU
 """
 import numpy as np
 import json
@@ -66,7 +67,7 @@ distances = np.ones((num_features, k))
 def k_means(features, centroids, labels, distances, iterations):
     loss = 1e10
     # iterate over the number of iterations or when the loss is 0
-    while iterations > 0 or loss == 0:
+    while iterations > 0 and loss > 0:
         # initialize the loss (number of misclassified features)
         loss = 0
         # iterate over the features
@@ -75,21 +76,23 @@ def k_means(features, centroids, labels, distances, iterations):
             for j in range(k):
                 # calculate the distance between the feature and the centroid
                 distances[i][j] = distance(features[i], centroids[j])
-            
-            # get the index of the minimum distance
+                # get the index of the minimum distance
             index = np.argmax(distances[i])
             if labels[i] != index:
                 loss += 1
             # assign the label to the feature
             labels[i] = index
 
-        features_j = np.empty_like(features)  # pre-allocate features_j
+
         # iterate over the centroids
         for j in range(k):
             # get the features with the label j
-            indices = [i for i, x in enumerate(labels) if x == j]
+            indices = np.argwhere(labels == j)
+            features_j = np.empty_like(features)  # pre-allocate features_j
+            h = 0
             for i in indices:
-                features_j[i] = features[i]
+                features_j[h] = features[i]
+                h += 1
             # calculate the mean of the features manually
             centroids[j] = np.sum(features_j, axis=0) / features_j.shape[0]
 
