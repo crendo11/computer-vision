@@ -2,7 +2,9 @@ contourpy==1.2.0
 cycler==0.12.1
 fonttools==4.44.0
 kiwisolver==1.4.5
+llvmlite==0.41.1
 matplotlib==3.8.1
+numba==0.58.1
 numpy==1.26.1
 opencv-python==4.8.1.78
 packaging==23.2
