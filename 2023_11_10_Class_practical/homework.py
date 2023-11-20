@@ -1,6 +1,7 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import json
 
 
 # importing sys
@@ -48,25 +49,29 @@ for z in range(10):
     corners = fd.get_harris_corners(H, threshold)
 
     features = fd.calculate_hog(I, corners)
+    features = np.array(features).tolist()
 
     # append the features to the list of features
-    features_list.append(features)
+    features_list.append({
+        'image': z,
+        'features': features
+    })
 
-    for corner in corners:
-        i, j = corner
-        cv2.circle(Iog, (i,j), radius, (0,255,0), 1)
+    # for corner in corners:
+    #     i, j = corner
+    #     cv2.circle(Iog, (i,j), radius, (0,255,0), 1)
 
-    # save the image
-    cv2.imwrite('./2023_11_10_Class_practical/images/{}_corners_t_5.jpg'.format(z), Iog)
+    # # save the image
+    # cv2.imwrite('./2023_11_10_Class_practical/images/{}_corners_t_5.jpg'.format(z), Iog)
 
     # console status
     print('Image {} processed.'.format(z))
 
-
-# write the features to a file so it can be used later
-with open('./2023_11_10_Class_practical/features_t_5.txt', 'w') as f:
-    for item in features_list:
-        f.write("%s\n" % item)
+# Save the HOG descriptors to a JSON lines file
+with open('./2023_11_10_Class_practical/features_t_5.txt', 'w') as file:
+    for entry in features_list:
+        # Convert the entry to a JSON string and write it to a line in the file
+        file.write(json.dumps(entry) + '\n')
 
 
 # calculate the harris matrix
