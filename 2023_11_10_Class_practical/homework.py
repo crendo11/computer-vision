@@ -68,7 +68,7 @@ for z in range(10):
     print('Image {} processed.'.format(z))
 
 # Save the HOG descriptors to a JSON lines file
-with open('./2023_11_10_Class_practical/features_t_5.txt', 'w') as file:
+with open('./2023_11_10_Class_practical/features_t_05.txt', 'w') as file:
     for entry in features_list:
         # Convert the entry to a JSON string and write it to a line in the file
         file.write(json.dumps(entry) + '\n')
