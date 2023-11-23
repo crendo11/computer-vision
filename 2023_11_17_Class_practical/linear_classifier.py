@@ -45,12 +45,12 @@ alpha = 0.01
 iterations = 100
 
 # compute the gradient decend
-theta = gradient_decend(x.T, y, theta, alpha, iterations)
+# theta = gradient_decend(x.T, y, theta, alpha, iterations)
         
 # # plot the data
-# plt.figure()
-# plt.scatter(x[:,1], y)
-# plt.plot(x[:,1], sigmoid(np.dot(x, theta)))
-# plt.show()
+plt.figure()
+plt.scatter(x[:,1], y)
+plt.plot(x[:,1], sigmoid(np.dot(x, theta)))
+plt.show()
 
 
