@@ -50,7 +50,8 @@ iterations = 100
 # # plot the data
 plt.figure()
 plt.scatter(x[:,1], y)
-plt.plot(x[:,1], sigmoid(np.dot(x, theta)))
+
+# also plot the points
+plt.figure()
+plt.scatter(x[:,0], x[:,1])
 plt.show()
-
-
