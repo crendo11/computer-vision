@@ -6,17 +6,13 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 def sigmoid_derivative(theta, x):
-    return 2*np.exp(np.dot(-theta, x)) * x / (1 + np.exp(np.dot(-theta,x)))**2
+    return -2*np.exp(np.dot(-theta, x)) * x / (1 + np.exp(np.dot(-theta,x)))**2
     
-
-def loss_function(x, y, theta):
-    m = y.shape[0]
-    return np.sum(y - sigmoid(np.dot(theta, x))**2)*1/m
-
 # gradient based on the mean squared error
 def gradient(x, y, theta):
     m = y.shape[0]
-    return 1/m * np.sum(y - sigmoid(np.dot(theta, x))*sigmoid_derivative(theta, x))
+    return 1/m * np.sum(y - sigmoid(np.dot(theta, x))*sigmoid_derivative(theta, x), axis=1)
+
 
 def gradient_decend(x, y, theta, alpha, iterations):
     while iterations > 0:
@@ -26,17 +22,29 @@ def gradient_decend(x, y, theta, alpha, iterations):
 
     return theta
 
-# create the data two groups of points clearely clustered
+# create the data two groups of points clearely clustered more dense in one group than the other
 x = np.array([[1, 1], 
               [1, 2], 
               [2, 1], 
               [2, 2], 
-              [4+4, 4], 
-              [4+4, 5], 
-              [5+4, 4], 
-              [5+4, 5]])
+              [4, 2], 
+              [4, 3], 
+              [5, 2], 
+              [5, 3],
+            #   [4+4, 3],
+            #   [4+4, 6],
+            #   [3+4, 4],
+            #   [3+4, 5],
+            #   [4+4, 2],
+            #   [4+4, 7],
+            #   [2+4, 4],
+            #   [2+4, 5]
+            ])
 
-y = np.array([0, 0, 0, 0, 1, 1, 1, 1])
+y = np.array([0, 0, 0, 0, 1, 1, 1, 1]) #, 1, 1, 1 , 1, 1, 1, 1, 1])
+
+# center the data
+
 
 # initialize theta
 theta = np.zeros(x.shape[1])     # the shape of theta is the number of columns of x
@@ -60,14 +68,46 @@ plt.scatter(x[:,0], x[:,1])
 
 # plot the line
 m = -theta[0]/theta[1]
+#find c from the mean of the points
 c = 0
-x_plot = np.linspace(0, 6, 100)
+
+x_plot = np.linspace(-2, 2, 100)
 y_plot = m*x_plot + c
 plt.plot(x_plot, y_plot, 'r')
+plt.grid()
 
 #plot the sigmoid function
 plt.figure()
 plt.plot(x[:,1], sigmoid(np.dot(theta, x.T)))
+
+# get a ramdom sample of points
+x_test = np.random.rand(100, 2)
+
+
+# plot the points
+plt.figure()
+plt.scatter(x_test[:,0], x_test[:,1])
+
+# order the points by increasing order of x[1]
+x_test = x_test[np.argsort(x_test[:,1])]
+
+# apply the classifier
+y_test = sigmoid(np.dot(theta, x_test.T))
+
+# plot the points
+plt.figure()
+plt.scatter(x_test[:,0], x_test[:,1], c=y_test)
+plt.colorbar()
+# plot the line
+x_plot = np.linspace(-0.5, 0.5, 100)
+y_plot = m*x_plot + c
+plt.plot(x_plot, y_plot, 'r')
+
+# draw the sigmoid function
+plt.figure()
+plt.plot(x_test[:,1], y_test)
+
+
 
 
 plt.show()
