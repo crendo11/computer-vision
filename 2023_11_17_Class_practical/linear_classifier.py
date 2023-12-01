@@ -31,10 +31,10 @@ x = np.array([[1, 1],
               [1, 2], 
               [2, 1], 
               [2, 2], 
-              [4, 4], 
-              [4, 5], 
-              [5, 4], 
-              [5, 5]])
+              [4+4, 4], 
+              [4+4, 5], 
+              [5+4, 4], 
+              [5+4, 5]])
 
 y = np.array([0, 0, 0, 0, 1, 1, 1, 1])
 
@@ -48,6 +48,7 @@ iterations = 100
 
 # compute the gradient decend
 theta = gradient_decend(x, y, theta, alpha, iterations)
+print(theta)
         
 # # plot the data
 plt.figure()
@@ -56,6 +57,13 @@ plt.scatter(x[:,1], y)
 # also plot the points
 plt.figure()
 plt.scatter(x[:,0], x[:,1])
+
+# plot the line
+m = -theta[0]/theta[1]
+c = 0
+x_plot = np.linspace(0, 6, 100)
+y_plot = m*x_plot + c
+plt.plot(x_plot, y_plot, 'r')
 
 #plot the sigmoid function
 plt.figure()
