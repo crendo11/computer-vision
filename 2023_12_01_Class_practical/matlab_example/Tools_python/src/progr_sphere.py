@@ -2,6 +2,8 @@ import cv2 as cv
 import numpy as np
 from scipy.interpolate import LinearNDInterpolator
 import matplotlib.pyplot as plt
+import os 
+from os.path import realpath, join
 
 
 
@@ -164,7 +166,8 @@ csi=0.98754;
 
 
 # Load and normalize the reference image
-tmp1=cv.imread("../../images/Im_R0_T0.pgm", 0)
+IMAGES_PATH = realpath('./2023_12_01_Class_practical/matlab_example/images/')
+tmp1 = cv.imread(join(IMAGES_PATH,'Im_R0_T0.pgm'), 0)
 I1 = tmp1/np.max(tmp1)
 
 
